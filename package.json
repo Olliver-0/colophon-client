@@ -2,8 +2,8 @@
   "name": "colophon-client",
   "description": "A full-stack social platform for readers to discover new books, organize their virtual bookshelves, and share their literary journey.",
   "author": "Natã Gabriel de Oliveira nata.gabriel.de.oliveira@gmail.com",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
