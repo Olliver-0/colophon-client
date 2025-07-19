@@ -1,6 +1,4 @@
-# Nome do workflow para identificação na aba Actions
 name: Client Project Automation
-
 on:
   pull_request:
     types: [opened, ready_for_review]
@@ -10,9 +8,15 @@ jobs:
     name: Move Linked Issue to 'Review'
     runs-on: ubuntu-latest
     steps:
+      - name: Get linked issue
+        uses: actions-ecosystem/action-get-linked-issue@v1
+        id: linked-issue
+
       - name: Move issue to 'Review' column
-        uses: alex-page/github-project-automation-plus@v0.8.1
+        uses: peter-evans/set-project-item-field@v4
         with:
-          project: Colophon
-          column: Review
-          repo-token: ${{ secrets.COLOPHON_PROJECT_ACTION }}
+          token: ${{ secrets.COLOPHON_PROJECT_ACTION }}
+          project-number: 2
+          item-id: ${{ steps.linked-issue.outputs.node-id }}
+          field-id: 'PVTF_lAHOC2nkfc4A-RBKzgxuMfE'
+          value: 'Review'
