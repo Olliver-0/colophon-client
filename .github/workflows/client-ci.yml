@@ -3,13 +3,7 @@ name: Client CI
 on:
   pull_request:
     branches: [main, develop]
-
-env:
-  PROJECT_OWNER: 'Olliver-0'
-  PROJECT_NUMBER: 2
-  STATUS_FIELD_NAME: 'Status'
-  STATUS_VALUE_NAME: 'Review'
-
+    
 jobs:
   build-and-test:
     name: Build and Test
