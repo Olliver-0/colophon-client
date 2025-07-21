@@ -39,31 +39,36 @@ jobs:
       pull-requests: read
       issues: read
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Get Linked Issue Number
+        id: get-issue-number
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          issue_number=$(echo "$PR_BODY" | grep -oE "(Closes|Fixes|Resolves) #[0-9]+" | grep -oE "[0-9]+")
+          if [ -n "$issue_number" ]; then
+            echo "Found issue number: $issue_number"
+            echo "issue_number=$issue_number" >> $GITHUB_OUTPUT
+          else
+            echo "No linked issue found in PR body."
+          fi
 
-      - name: Find linked issue and move card to 'Review'
+      - name: Add or find issue on project and move to 'Review'
+        if: steps.get-issue-number.outputs.issue_number
         env:
           GH_TOKEN: ${{ secrets.COLOPHON_PROJECT_ACTION }}
-          PROJECT_NUMBER:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PROJECT_NUMBER: 2
+          ISSUE_NUMBER: ${{ steps.get-issue-number.outputs.issue_number }}
         run: |
-          issue_id=$(gh pr view $PR_NUMBER --json closingIssuesReferences -q '.closingIssuesReferences.nodes[0].id')
-
-          if [ -z "$issue_id" ]; then
-            echo "No closing issue found in PR body. Skipping project automation."
-            exit 0
-          fi
-          echo "Found linked issue with Node ID: $issue_id"
-
-          item_id=$(gh project item-list ${{ env.PROJECT_NUMBER }} --owner "@me" --format json | jq -r --arg ISSUE_ID "$issue_id" '.items[] | select(.content.id == $ISSUE_ID) | .id')
+          # Passo A: Adiciona a issue ao projeto. Se já estiver lá, ele apenas retorna o ID do item existente.
+          item_id=$(gh project item-add ${{ env.PROJECT_NUMBER }} --owner "@me" --issue ${{ env.ISSUE_NUMBER }} --format json | jq -r '.id')
 
           if [ -z "$item_id" ]; then
-            echo "Linked issue is not on the project board. Skipping move."
-            exit 0
+            echo "Failed to add or find the issue in the project."
+            exit 1
           fi
-          echo "Found project item with ID: $item_id"
+          echo "Found/Added project item with ID: $item_id"
 
+          # Passo B: Edita o item (que agora temos certeza que existe) para definir o Status como "Review".
           gh project item-edit \
             --id "$item_id" \
             --project-id ${{ env.PROJECT_NUMBER }} \
