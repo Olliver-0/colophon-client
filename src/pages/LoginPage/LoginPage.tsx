@@ -1,8 +1,9 @@
 import { MainLayout } from '@/layouts/MainLayout/MainLayout';
 import { Input } from '@/components/forms/Input/Input';
-import { Link } from 'react-router-dom';
 import { Button } from '@/components/forms/Button/Button';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+
 import { isAxiosError } from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -16,25 +17,19 @@ interface ApiErrorResponse {
   }[];
 }
 
-export const SignUpPage = () => {
-  const [name, setName] = useState('');
+export const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const { register } = useAuth();
+
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert('Passwords does not match');
-      return;
-    }
-
-    const formData = { name, email, password };
+    const formData = { email, password };
     try {
-      await register(formData);
+      await login(formData);
       navigate('/');
     } catch (error) {
       if (isAxiosError(error) && error.response) {
@@ -52,22 +47,13 @@ export const SignUpPage = () => {
     <MainLayout>
       <div className="flex flex-col justify-center items-center px-4 py-8 gap-4">
         <h1 className="font-bold text-center text-3xl text-detail">
-          Sign Up and become a <span className="text-primary">Colophon</span>{' '}
-          Reader!
+          Access your <span className="text-primary">bookshelves</span>
         </h1>
 
         <form
           onSubmit={handleSubmit}
           className="flex flex-col gap-4 w-full max-w-96 bg-white mt-4 p-6 rounded-xl border border-highlight"
         >
-          <Input
-            label="Name"
-            name="name"
-            type="text"
-            placeholder="Insert your name here"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
           <Input
             label="Email"
             name="email"
@@ -86,29 +72,20 @@ export const SignUpPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Input
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            placeholder="Insert your password here"
-            required
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
           <Button
             type="submit"
             className="bg-primary w-32 self-center text-white hover:bg-primary/80"
           >
-            Sign Up
+            Login
           </Button>
         </form>
         <p className="text-detail text-base text-center">
-          Already have an account?{' '}
+          Don't have an account yet?{' '}
           <Link
-            to="/login"
+            to="/register"
             className="text-primary hover:text-primary/80 font-semibold text-lg transition"
           >
-            Sign in!
+            Sign Up!
           </Link>
         </p>
       </div>
