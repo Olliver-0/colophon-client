@@ -42,7 +42,7 @@ Follow these steps to get a local copy up and running.
 
 1.  **Clone the repository:**
     ```bash
-    git clone https://github.com/Olliver-0/colophon-client.git
+    git clone [https://github.com/Olliver-0/colophon-client.git](https://github.com/Olliver-0/colophon-api.git)
     ```
 2.  **Navigate to the project directory:**
     ```bash
@@ -53,25 +53,27 @@ Follow these steps to get a local copy up and running.
     npm install
     ```
 4.  **Set up Environment Variables:**
-    -   Create a `.env` file in the root of the project.
-    -   Add the API URL: `VITE_API_URL=http://localhost:3000`
+    - Create a `.env` file in the root of the project.
+    - Add the API URL: `VITE_API_URL=http://localhost:3000`
 5.  **Start the development server:**
-    ```bash
-    npm run dev
-    ```
-The application will be running on `http://localhost:5173` (or the next available port).
+    `bash
+npm run dev
+`
+    The application will be running on `http://localhost:5173` (or the next available port).
 
 ---
 
 ## Features
 
 ### MVP (Version 1.0)
+
 - [ ] User Authentication pages (Sign Up and Login)
 - [ ] Book search interface
 - [ ] Virtual bookshelves display
 - [ ] Book details page with ratings and reviews
 
 ### Future Roadmap
+
 - [ ] Social activity feed
 - [ ] User profile dashboard with reading stats
 - [ ] Responsive design for all devices
