@@ -8,8 +8,9 @@ import { PublicRoute } from './PublicRoute';
 export const AppRoutes = () => {
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} />
+
       <Route element={<PublicRoute />}>
-        <Route path="/" element={<HomePage />} />
         <Route path="/register" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
       </Route>
