@@ -60,7 +60,7 @@ export const Header = () => {
               to="#"
               className="flex text-detail hover:bg-highlight hover:text-primary rounded-md size-10 justify-center items-center transition"
             >
-              <HiOutlineMagnifyingGlass />
+              <HiOutlineMagnifyingGlass className="stroke-2" />
             </Link>
             <Link
               to="#"
