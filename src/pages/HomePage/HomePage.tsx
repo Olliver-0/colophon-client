@@ -1,9 +1,9 @@
 import { MainLayout } from '@/layouts/MainLayout/MainLayout';
-import { Button } from '@/components/forms/Button/Button';
 import illuminatedBookshelves from '../../assets/images/illuminated-bookshelves.png';
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2';
 import { FaRegBookmark } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export const HomePage = () => {
   return (
@@ -21,12 +21,12 @@ export const HomePage = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center sm:justify-start items-center gap-4">
-            <Button className="bg-primary w-full sm:w-max rounded-xl px-8 text-white hover:bg-terracotta/90 transform hover:scale-105 transition-all duration-200 shadow-lg">
+            <Link to="/register"  className="flex justify-center items-center h-10 px-2 py-4 rounded-md text-sm font-semibold cursor-pointer transition bg-primary w-full sm:w-max rounded-xl px-8 text-white hover:bg-terracotta/90 transform hover:scale-105 transition-all duration-200 shadow-lg">
               Start Now
-            </Button>
-            <Button className="w-full sm:w-max rounded-xl border-2 hover:bg-highlight border-highlight text-highlight hover:text-white px-8 transition-all duration-200">
+            </Link>
+            <Link to="/" className="flex justify-center items-center h-10 py-4 text-sm font-semibold cursor-pointer w-full sm:w-max rounded-xl border-2 hover:bg-highlight border-highlight text-highlight hover:text-white px-8 transition-all duration-200">
               Explore
-            </Button>
+            </Link>
           </div>
         </div>
 

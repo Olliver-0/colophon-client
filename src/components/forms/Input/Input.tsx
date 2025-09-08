@@ -1,10 +1,14 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 
 interface InputProps extends React.ComponentProps<'input'> {
-  label: string;
+  label: React.ReactNode;
+  className?: string;
 }
 
-export const Input = ({ label, name, ...rest }: InputProps) => {
+export const Input = ({ label, name, className, ...rest }: InputProps) => {
+  const defaultStyles = "border border-primary text-detail rounded-md h-10 p-2 outline-none focus:border-2";
+
   return (
     <div className="flex flex-col">
       <label
@@ -17,7 +21,7 @@ export const Input = ({ label, name, ...rest }: InputProps) => {
         id={name}
         name={name}
         {...rest}
-        className="border border-primary text-detail rounded-md h-10 p-2 outline-none focus:border-2"
+        className={cn(defaultStyles, className)}
       />
     </div>
   );
