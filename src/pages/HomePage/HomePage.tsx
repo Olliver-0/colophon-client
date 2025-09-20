@@ -24,7 +24,7 @@ export const HomePage = () => {
             <Link to="/register"  className="flex justify-center items-center h-10 px-2 py-4 rounded-md text-sm font-semibold cursor-pointer transition bg-primary w-full sm:w-max rounded-xl px-8 text-white hover:bg-terracotta/90 transform hover:scale-105 transition-all duration-200 shadow-lg">
               Start Now
             </Link>
-            <Link to="/" className="flex justify-center items-center h-10 py-4 text-sm font-semibold cursor-pointer w-full sm:w-max rounded-xl border-2 hover:bg-highlight border-highlight text-highlight hover:text-white px-8 transition-all duration-200">
+            <Link to="/books?q=discover" className="flex justify-center items-center h-10 py-4 text-sm font-semibold cursor-pointer w-full sm:w-max rounded-xl border-2 hover:bg-highlight border-highlight text-highlight hover:text-white px-8 transition-all duration-200">
               Explore
             </Link>
           </div>
