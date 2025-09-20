@@ -5,7 +5,8 @@ import { MainLayout } from '@/layouts/MainLayout/MainLayout';
 import { searchBooks } from '@/services/book.service';
 import type { Book } from '@/types';
 import { isAxiosError } from 'axios';
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2';
 import Select, { type MultiValue, type StylesConfig } from 'react-select';
 
@@ -102,9 +103,10 @@ export const SearchPage = () => {
   const [hasSearched, setHasSearched] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState<MultiValue<GenreOption>>([]);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!search) {
+  const [searchParams] = useSearchParams();
+
+  const performSearch = useCallback(async (query: string) => {
+    if (!query) {
       setBooks([]);
       setError('Please type something to search.');
       return;
@@ -117,7 +119,7 @@ export const SearchPage = () => {
     setSelectedGenres([]);
 
     try {
-      const foundBooks = await searchBooks(search);
+      const foundBooks = await searchBooks(query);
       setBooks(foundBooks);
     } catch (err) {
       let errorMessage = 'An unexpected error occurred. Please try again.';
@@ -130,7 +132,21 @@ export const SearchPage = () => {
     } finally {
       setIsLoading(false);
     }
+  }, []);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    performSearch(search);
   };
+
+  useEffect(() => {
+    const exploreQuery = searchParams.get('q');
+    if (exploreQuery === 'discover') {
+      const defaultQuery = 'Classic Literature';
+      setSearch(defaultQuery);
+      performSearch(defaultQuery);
+    }
+  }, [searchParams, performSearch]);
 
   const filteredBooks = books.filter((bookObject) => {
     if (selectedGenres.length === 0) {
