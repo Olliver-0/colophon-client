@@ -1,5 +1,11 @@
-// Adicione o 'useEffect' aos seus imports do React
-import { createContext, useState, useContext, type ReactNode, useEffect } from 'react';
+import {
+  createContext,
+  useState,
+  useContext,
+  type ReactNode,
+  useEffect,
+} from 'react';
+
 import {
   login as loginService,
   register as registerService,
@@ -7,7 +13,6 @@ import {
   logout as logoutService,
 } from '@/services/auth.service';
 
-// --- Tipos ---
 interface User {
   id: string;
   name: string;
@@ -53,7 +58,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         const userProfile = await getProfile();
         setUser(userProfile);
       } catch (error) {
-        console.error("No active session found.", error);
+        console.error('No active session found.', error);
         setUser(null);
       }
     };
@@ -66,7 +71,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       const userProfile = await getProfile();
       setUser(userProfile);
     } catch (error) {
-      console.error("Failed to fetch user profile after auth", error);
+      console.error('Failed to fetch user profile after auth', error);
       setUser(null);
     }
   };
@@ -80,12 +85,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await loginService(credentials);
     await handleSuccessfulAuth();
   };
-  
+
   const logout = async () => {
     try {
       await logoutService();
-    } catch(error) {
-      console.error("Logout API call failed", error);
+    } catch (error) {
+      console.error('Logout API call failed', error);
     } finally {
       setUser(null);
     }
