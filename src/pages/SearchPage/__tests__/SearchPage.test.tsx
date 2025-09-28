@@ -113,6 +113,6 @@ describe('SearchPage', () => {
       expect(screen.getByText('Duna')).toBeInTheDocument();
     });
 
-    expect(mockedBookService.searchBooks).toHaveBeenCalledWith('Classic Literature');
+    expect(mockedBookService.searchBooks).toHaveBeenCalledWith('Rick Riordan');
   });
 });

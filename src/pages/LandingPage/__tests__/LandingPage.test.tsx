@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
-import { HomePage } from '../HomePage';
+import { LandingPage } from '../LandingPage';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider, useAuth } from '@/contexts/AuthContext';
 
@@ -11,7 +11,7 @@ vi.mock('@/contexts/AuthContext', () => ({
 
 const useAuthMock = useAuth as Mock;
 
-describe('HomePage', () => {
+describe('LandingPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     useAuthMock.mockReturnValue({
@@ -23,7 +23,7 @@ describe('HomePage', () => {
     render(
       <BrowserRouter>
         <AuthProvider>
-          <HomePage />
+          <LandingPage />
         </AuthProvider>
       </BrowserRouter>
     );
