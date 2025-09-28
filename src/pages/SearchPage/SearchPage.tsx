@@ -142,7 +142,7 @@ export const SearchPage = () => {
   useEffect(() => {
     const exploreQuery = searchParams.get('q');
     if (exploreQuery === 'discover') {
-      const defaultQuery = 'Classic Literature';
+      const defaultQuery = 'Rick Riordan';
       setSearch(defaultQuery);
       performSearch(defaultQuery);
     }
