@@ -1,11 +1,11 @@
 import { MainLayout } from '@/layouts/MainLayout/MainLayout';
 import illuminatedBookshelves from '../../assets/images/illuminated-bookshelves.png';
 import { HiOutlineMagnifyingGlass } from 'react-icons/hi2';
-import { FaRegBookmark } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { PiBooksBold } from 'react-icons/pi';
 
-export const HomePage = () => {
+export const LandingPage = () => {
   return (
     <MainLayout>
       <section className="flex flex-col lg:flex-row justify-center items-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  py-20 gap-12">
@@ -63,7 +63,7 @@ export const HomePage = () => {
           </div>
 
           <div className="flex flex-col justify-center items-center p-6 gap-4">
-            <FaRegBookmark className="text-highlight size-8" />
+            <PiBooksBold className="text-highlight size-8" />
             <h3 className="text-detail text-xl text-center font-semibold">
               Organized Bookshelves
             </h3>
