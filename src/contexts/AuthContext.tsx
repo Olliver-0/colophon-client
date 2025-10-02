@@ -1,4 +1,11 @@
-import { createContext, useState, useContext, type ReactNode } from 'react';
+import {
+  createContext,
+  useState,
+  useContext,
+  type ReactNode,
+  useEffect,
+} from 'react';
+
 import {
   login as loginService,
   register as registerService,
@@ -6,7 +13,6 @@ import {
   logout as logoutService,
 } from '@/services/auth.service';
 
-// --- Tipos ---
 interface User {
   id: string;
   name: string;
@@ -28,7 +34,6 @@ interface AuthContextType {
   logout: () => void;
 }
 
-// --- Contexto ---
 const AuthContext = createContext<AuthContextType | null>(null);
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -40,7 +45,6 @@ export const useAuth = () => {
   return context;
 };
 
-// --- Provedor ---
 interface AuthProviderProps {
   children: ReactNode;
 }
@@ -48,19 +52,32 @@ interface AuthProviderProps {
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
 
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+      try {
+        const userProfile = await getProfile();
+        setUser(userProfile);
+      } catch (error) {
+        console.error('No active session found.', error);
+        setUser(null);
+      }
+    };
+
+    checkAuthStatus();
+  }, []);
+
   const handleSuccessfulAuth = async () => {
     try {
       const userProfile = await getProfile();
       setUser(userProfile);
     } catch (error) {
-      console.error("Failed to fetch user profile after auth", error);
+      console.error('Failed to fetch user profile after auth', error);
       setUser(null);
     }
   };
 
   const register = async (userData: RegisterData) => {
     await registerService(userData);
-    // Após o registro, faz o login automaticamente para obter o cookie e buscar o perfil
     await login({ email: userData.email, password: userData.password });
   };
 
@@ -68,14 +85,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     await loginService(credentials);
     await handleSuccessfulAuth();
   };
-  
+
   const logout = async () => {
     try {
       await logoutService();
-    } catch(error) {
-      console.error("Logout API call failed", error);
+    } catch (error) {
+      console.error('Logout API call failed', error);
     } finally {
-      // Limpa o estado do usuário independentemente do sucesso da chamada da API
       setUser(null);
     }
   };
